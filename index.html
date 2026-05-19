@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFA Agrotech: Bio-Calculus Harumanis Growth Simulator</title>
+    <!-- Tailwind CSS for modern responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for beautiful animated plotting -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons for high-fidelity UI elements -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Inter & Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .heading-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col">
+
+    <!-- Navigation / Header Bar -->
+    <header class="bg-emerald-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-emerald-700 rounded-lg text-emerald-100">
+                    <i data-lucide="leaf" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold heading-font tracking-wide">SFA AGROTECH LABS</h1>
+                    <p class="text-xs text-emerald-200">Bio-Calculus Interactive Learning System • Malaysia</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 text-xs sm:text-sm bg-emerald-950 px-3 py-1.5 rounded-full border border-emerald-800">
+                <span class="w-2.5 h-2.5 bg-green-400 rounded-full animate-ping"></span>
+                <span class="font-medium">Focus: Mangifera indica 'Harumanis' Growth Model</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Panel: Problem Context & Mathematical Formulations -->
+        <section class="lg:col-span-5 space-y-6 flex flex-col justify-start">
+            
+            <!-- Real Scenario Context Box -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full -mr-10 -mt-10 -z-10"></div>
+                <div class="flex items-center space-x-2 mb-3">
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-1 rounded-full uppercase">Agrotech Scenario</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 heading-font mb-3">Optimizing Harumanis Growth in Perlis</h2>
+                <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                    In precision Malaysian agriculture, managing the signature <strong>Harumanis mango (MA 128)</strong> requires meticulous scheduling. 
+                    Using empirical data recorded by the <strong>Malaysian Agricultural Research and Development Institute (MARDI)</strong>, fruit growth follows a classic biological <em>Sigmoid curve (logistic growth)</em>. 
+                </p>
+                <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 text-xs text-slate-700 space-y-2">
+                    <p class="font-semibold text-emerald-900 flex items-center gap-1.5">
+                        <i data-lucide="database" class="w-4 h-4"></i> Data Modeling Sources:
+                    </p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>MARDI Harumanis Perlis Growth Database (2022)</li>
+                        <li><em>Manual Penanaman Mangga Harumanis</em> - Jabatan Pertanian Negeri Perlis</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Mathematical Framework Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <h3 class="text-lg font-bold text-slate-900 heading-font mb-4 flex items-center gap-2">
+                    <i data-lucide="binary" class="text-emerald-600"></i> The Mathematical Model
+                </h3>
+                
+                <p class="text-xs text-slate-500 mb-4">
+                    The growth of the mango fruit mass $f(x)$ over $x$ (Weeks After Fruit Set, WAFS) is modeled using a sigmoid curve. The derivative $f'(x)$ models the instantaneous growth rate (grams/week).
+                </p>
+
+                <div class="space-y-4">
+                    <!-- Function f(x) -->
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md">Growth Function f(x)</span>
+                            <span class="text-[11px] text-slate-400">Sigmoid Curve</span>
+                        </div>
+                        <p class="text-lg font-mono text-center py-2 font-bold text-slate-800">
+                            f(x) = <span class="text-indigo-600">450</span> / (1 + e<sup>-0.6(x - 7)</sup>)
+                        </p>
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            Where <strong class="text-slate-700">450g</strong> is the maximum potential ripe mass of a premium Harumanis, and growth speed peaks at <strong class="text-slate-700">7 weeks</strong>.
+                        </p>
+                    </div>
+
+                    <!-- Derivative f'(x) -->
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">Derivative f'(x)</span>
+                            <span class="text-[11px] text-slate-400">Instantaneous Rate of Change</span>
+                        </div>
+                        <p class="text-lg font-mono text-center py-2 font-bold text-slate-800">
+                            f'(x) = 270e<sup>-0.6(x - 7)</sup> / (1 + e<sup>-0.6(x - 7)</sup>)<sup>2</sup>
+                        </p>
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            Represents the instantaneous speed of weight gain (g/week). Obtained using the Quotient Rule and Chain Rule.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz / Conceptual Knowledge Booster -->
+            <div class="bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl p-6 shadow-md">
+                <h4 class="font-bold text-emerald-400 mb-2 flex items-center gap-1.5 text-sm uppercase tracking-wider heading-font">
+                    <i data-lucide="award" class="w-5 h-5"></i> Agrotech Quiz Break
+                </h4>
+                <p class="text-xs text-emerald-200 mb-3">At what week does the derivative growth rate $f'(x)$ reach its highest point, and what biological event does it signify?</p>
+                <div class="space-y-2 text-xs">
+                    <button onclick="revealAnswer(1)" class="w-full text-left p-2.5 rounded-lg bg-emerald-900/40 hover:bg-emerald-900/80 border border-emerald-800/60 transition-all flex items-center justify-between">
+                        <span>A) Week 14: Ripening sugar accumulation</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-400"></i>
+                    </button>
+                    <button onclick="revealAnswer(2)" class="w-full text-left p-2.5 rounded-lg bg-emerald-900/40 hover:bg-emerald-900/80 border border-emerald-800/60 transition-all flex items-center justify-between">
+                        <span>B) Week 7: Maximum cell expansion (Inflection Point)</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-400"></i>
+                    </button>
+                </div>
+                <div id="quiz-answer" class="mt-3 p-3 bg-emerald-900/50 rounded-lg text-emerald-100 hidden border border-emerald-500/30"></div>
+            </div>
+
+        </section>
+
+        <!-- Right Panel: Visualizer Chart & Click Analysis Panel -->
+        <section class="lg:col-span-7 space-y-6">
+            
+            <!-- Graph Visualizer -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900 heading-font">Interactive Harumanis Growth curves</h3>
+                        <p class="text-xs text-slate-500">Click anywhere on the chart or use the slider below to examine dynamic growth rates.</p>
+                    </div>
+                    <div class="flex items-center space-x-4 text-xs font-semibold">
+                        <span class="flex items-center gap-1.5 text-indigo-600">
+                            <span class="w-3 h-3 rounded-full bg-indigo-600"></span> Fruit Mass f(x)
+                        </span>
+                        <span class="flex items-center gap-1.5 text-amber-500">
+                            <span class="w-3 h-3 rounded bg-amber-500"></span> Growth Speed f'(x)
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Canvas Area -->
+                <div class="relative w-full h-80 sm:h-96 bg-slate-50 rounded-xl p-2 border border-slate-200">
+                    <canvas id="growthChart"></canvas>
+                </div>
+
+                <!-- Manual Slider Interface -->
+                <div class="mt-6 space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-medium text-slate-600 flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4 text-emerald-600"></i> Weeks After Fruit Set (WAFS):</span>
+                        <span id="slider-val-display" class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-sm">Week 7.0</span>
+                    </div>
+                    <input type="range" id="weeksSlider" min="0" max="14" step="0.1" value="7" 
+                           class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <div class="flex justify-between text-[10px] text-slate-400 font-medium px-1">
+                        <span>Week 0 (Fruit Set)</span>
+                        <span>Week 3.5 (Early Growth)</span>
+                        <span>Week 7 (Inflection Point)</span>
+                        <span>Week 10.5 (Ripening Phase)</span>
+                        <span>Week 14 (Harvest Maturity)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Readout & Layman Explanation Terminal -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <!-- Status Banner -->
+                <div class="bg-gradient-to-r from-emerald-800 to-teal-800 text-white p-4 flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="stethoscope" class="w-5 h-5 text-emerald-200"></i>
+                        <span class="font-bold text-sm tracking-wider uppercase heading-font">Selected Stage Diagnosis</span>
+                    </div>
+                    <span id="current-phase-badge" class="bg-amber-400 text-slate-950 font-bold text-[11px] px-2.5 py-1 rounded-full uppercase">Peak Development</span>
+                </div>
+
+                <!-- Analytics Display Metrics -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 border-b border-slate-100 bg-slate-50/50">
+                    <!-- Mass readout -->
+                    <div class="p-6 flex items-center space-x-4 border-b sm:border-b-0 sm:border-r border-slate-100">
+                        <div class="p-3 bg-indigo-50 rounded-xl text-indigo-600">
+                            <i data-lucide="scale" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Instantaneous Fruit Mass</p>
+                            <p class="text-3xl font-extrabold text-slate-900 heading-font" id="display-mass">225.0 <span class="text-sm font-medium text-slate-500">grams</span></p>
+                            <span class="text-[10px] font-mono text-indigo-600" id="formula-mass-calc">f(7.0) = 450 / (1 + e^0)</span>
+                        </div>
+                    </div>
+
+                    <!-- Derivative rate readout -->
+                    <div class="p-6 flex items-center space-x-4">
+                        <div class="p-3 bg-amber-50 rounded-xl text-amber-600 animate-pulse">
+                            <i data-lucide="trending-up" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Growth Speed (Derivative)</p>
+                            <p class="text-3xl font-extrabold text-slate-900 heading-font text-amber-600" id="display-rate">67.5 <span class="text-sm font-medium text-slate-500">g/week</span></p>
+                            <span class="text-[10px] font-mono text-amber-600" id="formula-rate-calc">f'(7.0) = 67.5 g/wk</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layman Explanation Section -->
+                <div class="p-6 space-y-4">
+                    <h4 class="font-bold text-slate-900 flex items-center gap-1.5 text-sm uppercase tracking-wider heading-font">
+                        <i data-lucide="message-square" class="text-emerald-600 w-5 h-5"></i> Agrotechnological Meaning
+                    </h4>
+                    
+                    <div class="p-4 bg-emerald-50/70 border border-emerald-100 rounded-xl">
+                        <p id="layman-explanation" class="text-sm text-slate-700 leading-relaxed font-medium">
+                            The mango is entering its peak explosive cellular expansion phase. This is the exact inflection point in its growth cycle.
+                        </p>
+                    </div>
+
+                    <!-- Agrotechnical Recommendation Checklist -->
+                    <div class="space-y-2 pt-2">
+                        <p class="text-xs font-bold uppercase text-slate-400 tracking-wider">MARDI Agronomist Recommended Actions:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600">
+                            <div class="flex items-center gap-2" id="action-item-1">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+                                <span>High irrigation scheduling (10-15L/day)</span>
+                            </div>
+                            <div class="flex items-center gap-2" id="action-item-2">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+                                <span>Potassium (K) rich fertilizer application</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-xs text-center mt-12">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="text-slate-300 font-semibold">SFA Agrotech Project - Universiti Malaysia Kelantan (UMK) / MARDI Collaboration Resource</p>
+            <p>Designed for undergraduate educational purposes to satisfy Coursework bioscience calculus prerequisites.</p>
+            <p class="pt-2 text-[11px] text-slate-500">Interactive Web Simulation built with Tailwind CSS, Chart.js, and Vanilla JS. &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // Constants of the physiological logistic growth curve
+        const L = 450;    // Carring capacity / Maximum fruit weight in grams
+        const k = 0.6;    // Growth rate coefficient (steepness of curve)
+        const x0 = 7.0;   // Midpoint week of fastest growth (inflection point)
+
+        // Generate fine-grained coordinate datasets for smooth plotting
+        const weeksData = [];
+        const massData = [];
+        const rateData = [];
+
+        for (let w = 0; w <= 14; w += 0.25) {
+            const formattedW = Math.round(w * 100) / 100;
+            weeksData.push(formattedW);
+            
+            // Calculate f(x)
+            const f_x = L / (1 + Math.exp(-k * (formattedW - x0)));
+            massData.push(f_x);
+
+            // Calculate f'(x)
+            const exp_term = Math.exp(-k * (formattedW - x0));
+            const numerator = L * k * exp_term;
+            const denominator = Math.pow(1 + exp_term, 2);
+            const df_x = numerator / denominator;
+            rateData.push(df_x);
+        }
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        let chartInstance;
+        const ctx = document.getElementById('growthChart').getContext('2d');
+
+        // Create customizable plugin to draw a vertical indicator line at selected value
+        const verticalLinePlugin = {
+            id: 'verticalLine',
+            afterDraw: (chart) => {
+                if (chart.tooltip?._active && chart.tooltip._active.length) {
+                    const activePoint = chart.tooltip._active[0];
+                    const ctx = chart.ctx;
+                    const x = activePoint.element.x;
+                    const topY = chart.scales.y.top;
+                    const bottomY = chart.scales.y.bottom;
+
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.moveTo(x, topY);
+                    ctx.lineTo(x, bottomY);
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeStyle = 'rgba(16, 185, 129, 0.6)'; // emerald-500
+                    ctx.setLineDash([5, 5]);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            }
+        };
+
+        // Initialize the Chart
+        chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: weeksData,
+                datasets: [
+                    {
+                        label: 'Fruit Weight f(x) (grams)',
+                        data: massData,
+                        borderColor: '#4f46e5', // indigo-600
+                        backgroundColor: 'rgba(79, 70, 229, 0.05)',
+                        borderWidth: 3,
+                        yAxisID: 'y',
+                        pointRadius: 0,
+                        pointHoverRadius: 6,
+                        pointHitRadius: 10,
+                        fill: true,
+                        tension: 0.2
+                    },
+                    {
+                        label: "Growth Speed f'(x) (g/week)",
+                        data: rateData,
+                        borderColor: '#f59e0b', // amber-500
+                        borderWidth: 2,
+                        borderDash: [4, 4],
+                        yAxisID: 'yRate',
+                        pointRadius: 0,
+                        pointHoverRadius: 6,
+                        pointHitRadius: 10,
+                        tension: 0.2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: {
+                        display: false // Turned off as custom header legend is present
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y.toFixed(2);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Weeks After Fruit Set (WAFS)',
+                            color: '#475569',
+                            font: {
+                                size: 11,
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: '#f1f5f9'
+                        }
+                    },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Fruit Mass (grams)',
+                            color: '#4f46e5',
+                            font: {
+                                size: 11,
+                                weight: 'bold'
+                            }
+                        },
+                        min: 0,
+                        max: 500,
+                        grid: {
+                            color: '#f1f5f9'
+                        }
+                    },
+                    yRate: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Growth Speed (g/week)',
+                            color: '#f59e0b',
+                            font: {
+                                size: 11,
+                                weight: 'bold'
+                            }
+                        },
+                        min: 0,
+                        max: 80,
+                        grid: {
+                            drawOnChartArea: false // prevent grid line overlapping
+                        }
+                    }
+                },
+                // Custom chart click function
+                onClick: (e) => {
+                    const points = chartInstance.getElementsAtEventForMode(e, 'index', { intersect: false }, true);
+                    if (points.length) {
+                        const firstPoint = points[0];
+                        const weekValue = weeksData[firstPoint.index];
+                        // Sync slider and recalculate dashboard
+                        document.getElementById('weeksSlider').value = weekValue;
+                        updateAgrotechMetrics(weekValue);
+                    }
+                }
+            },
+            plugins: [verticalLinePlugin]
+        });
+
+        const sliderInput = document.getElementById('weeksSlider');
+        const sliderDisplay = document.getElementById('slider-val-display');
+
+        sliderInput.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            sliderDisplay.textContent = `Week ${val.toFixed(1)}`;
+            updateAgrotechMetrics(val);
+        });
+
+        // Main Calculation and UI synchronization logic
+        function updateAgrotechMetrics(week) {
+            // Recalculate f(week)
+            const mass = L / (1 + Math.exp(-k * (week - x0)));
+            
+            // Recalculate f'(week)
+            const exp_term = Math.exp(-k * (week - x0));
+            const numerator = L * k * exp_term;
+            const denominator = Math.pow(1 + exp_term, 2);
+            const rate = numerator / denominator;
+
+            // Render numeric metrics
+            document.getElementById('display-mass').innerHTML = `${mass.toFixed(1)} <span class="text-sm font-medium text-slate-500">grams</span>`;
+            document.getElementById('display-rate').innerHTML = `${rate.toFixed(2)} <span class="text-sm font-medium text-slate-500">g/week</span>`;
+            
+            // Render Math equations breakdowns
+            document.getElementById('formula-mass-calc').textContent = `f(${week.toFixed(1)}) = 450 / (1 + e^-0.6(${week.toFixed(1)} - 7)) = ${mass.toFixed(1)}g`;
+            document.getElementById('formula-rate-calc').textContent = `f'(${week.toFixed(1)}) = (270 * e^-0.6(${week.toFixed(1)} - 7)) / (1 + e^...)^2 = ${rate.toFixed(2)} g/wk`;
+
+            // Physiological phases categorizations
+            const phaseBadge = document.getElementById('current-phase-badge');
+            const explanationText = document.getElementById('layman-explanation');
+            const actionItem1 = document.getElementById('action-item-1');
+            const actionItem2 = document.getElementById('action-item-2');
+
+            if (week <= 3.5) {
+                // LAG PHASE
+                phaseBadge.textContent = "Phase 1: Cell Division (Lag Phase)";
+                phaseBadge.className = "bg-indigo-100 text-indigo-800 font-bold text-[11px] px-2.5 py-1 rounded-full uppercase";
+                explanationText.innerHTML = `At Week <strong>${week.toFixed(1)}</strong>, the young Harumanis fruit growth is slowly picking up. Cell division is extremely active, but overall volumetric changes remain minimal. Growth speed is currently low at <strong>${rate.toFixed(2)} g/week</strong>.`;
+                actionItem1.innerHTML = `<i data-lucide="droplet" class="w-4 h-4 text-indigo-600"></i> Moderate hydration. Overwatering triggers premature shedding.`;
+                actionItem2.innerHTML = `<i data-lucide="shield" class="w-4 h-4 text-indigo-600"></i> Screen for anthracnose fungal infection on early blossoms.`;
+            } else if (week > 3.5 && week < 10.5) {
+                // LOG / EXPONENTIAL EXPANSION PHASE
+                phaseBadge.textContent = "Phase 2: Cell Enlargement (Exponential)";
+                phaseBadge.className = "bg-emerald-100 text-emerald-800 font-bold text-[11px] px-2.5 py-1 rounded-full uppercase";
+                
+                let growthContext = "";
+                if (Math.abs(week - 7) < 0.5) {
+                    growthContext = `<strong>This is the inflection point (f''(x) = 0). The fruit growth rate peaks exactly here at ${rate.toFixed(1)} g/week.</strong> Cellular expansion is happening at maximum physical limits.`;
+                } else if (week < 7) {
+                    growthContext = `Growth rate is accelerating. The derivative speed is rising rapidly to its peak of 67.5 g/week. Mass is swelling visibly.`;
+                } else {
+                    growthContext = `Growth rate has begun deceleration, but the fruit mass continues to accumulate massive weight. Highly active physiological stage.`;
+                }
+                
+                explanationText.innerHTML = `At Week <strong>${week.toFixed(1)}</strong>, the Harumanis is in its explosive expansion phase. It weighs <strong>${mass.toFixed(1)}g</strong>. Demand for structural mineral accumulation and moisture is critical.`;
+                actionItem1.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Critical Potassium (K) fertilization support now.`;
+                actionItem2.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Maintain daily drip irrigation of 12-15 liters per tree.`;
+            } else {
+                // MATURATION / RIPENING PHASE
+                phaseBadge.textContent = "Phase 3: Maturation & Sweetening";
+                phaseBadge.className = "bg-amber-100 text-amber-800 font-bold text-[11px] px-2.5 py-1 rounded-full uppercase";
+                explanationText.innerHTML = `At Week <strong>${week.toFixed(1)}</strong>, mass growth approaches carrying capacity (current weight: <strong>${mass.toFixed(1)}g</strong>). The rate of change has dropped to only <strong>${rate.toFixed(2)} g/week</strong>. Starch conversions into aromatic volatiles and complex sugars are occurring.`;
+                actionItem1.innerHTML = `<i data-lucide="sunset" class="w-4 h-4 text-amber-600"></i> Halt synthetic irrigation. Excess moisture causes tasteless, watery pulp.`;
+                actionItem2.innerHTML = `<i data-lucide="shopping-bag" class="w-4 h-4 text-amber-600"></i> Prepare harvest logistics based on Perlis DOA maturity indexing.`;
+            }
+
+            // Sync visual highlights on the chart tooltip/cursor if active
+            const datasetIndex = 0; 
+            const index = Math.round(week * 4); // convert back to dataset step indices
+            
+            if(chartInstance) {
+                // Trigger chart hover update programmatically
+                chartInstance.setActiveElements([{datasetIndex: 0, index: index}]);
+                chartInstance.tooltip.setActiveElements([{datasetIndex: 0, index: index}], {x: 0, y: 0});
+                chartInstance.update();
+            }
+
+            // Refresh icons dynamically inside the boxes
+            lucide.createIcons();
+        }
+
+        // Mini Quiz Interactive Controller
+        function revealAnswer(choice) {
+            const feedback = document.getElementById('quiz-answer');
+            feedback.classList.remove('hidden');
+            if (choice === 2) {
+                feedback.innerHTML = `
+                    <p class="font-bold text-green-400 flex items-center gap-1"><i data-lucide="check" class="w-4 h-4"></i> Correct, Excellent Agrotechnologist!</p>
+                    <p class="text-xs text-emerald-100 mt-1">
+                        At $x = 7.0$ weeks (the inflection point), the second derivative $f''(x) = 0$, meaning the growth speed $f'(x)$ peaks at exactly <strong>67.5 grams per week</strong>. This represents the peak cellular expansion window.
+                    </p>
+                `;
+            } else {
+                feedback.innerHTML = `
+                    <p class="font-bold text-rose-400 flex items-center gap-1"><i data-lucide="x" class="w-4 h-4"></i> Incorrect.</p>
+                    <p class="text-xs text-emerald-200 mt-1">
+                        Week 14 is harvest time where growth slows to a stop ($f'(x) \\approx 0$). Try option B! The peak growth rate occurs at the inflection point, week 7.
+                    </p>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        // Initialize state on window load
+        window.onload = function() {
+            updateAgrotechMetrics(7.0);
+        };
+    </script>
+</body>
+</html>
